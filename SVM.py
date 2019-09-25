@@ -16,7 +16,7 @@ discrete_predictions = clf.predict(z)
 clf = svm.SVC(gamma='auto', probability=True)
 clf.fit(X, y)
 
-prob_predictions = clf.predict_proba(z)
+prob_predictions = clf.predict_proba(z)[:, 1]
 
 # save submissions
 save_predictions(discrete_predictions, name="discrete_SVM.csv")
