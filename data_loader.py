@@ -167,11 +167,11 @@ def load_test_data():
     return imp.transform(X)
 
 
-def save_predictions(predictions, name="submission.csv"):
+def save_predictions(predictions, name="submission.csv", fmt="%i"):
     ids = pd.read_csv("test.csv", low_memory=False).to_numpy()
 
     ids = ids[:, 0].astype('int')
     data = np.zeros((ids.shape[0], 2))
     data[:, 0] = ids
     data[:, 1] = predictions
-    np.savetxt(name, data, fmt='%i', delimiter=",")
+    np.savetxt(name, data, fmt=['%i', fmt], delimiter=",", header="PassengerId,Survived")
