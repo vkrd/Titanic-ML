@@ -15,7 +15,7 @@ param_grid = {'C': [0.1, 1, 10, 100, 1000, 10000],
               'kernel': ['linear', 'rbf']}
 
 if gridSearch:
-    grid = GridSearchCV(SVC(probability=True), param_grid, refit=True, verbose=3)
+    grid = GridSearchCV(SVC(probability=True), param_grid, refit=True, verbose=3, n_jobs=-1)
 
     # Run grid search
     grid.fit(X, y)
@@ -24,7 +24,7 @@ if gridSearch:
     discrete_predictions = grid.predict(z)
     prob_predictions = grid.predict_proba(z)[:, 1]
 
-    print("Best parameters: " + str(grid.get_params()))
+    print("Best parameters: " + str(grid.best_params_))
 
     # Save output
     save_predictions(discrete_predictions, name="grid_discrete_SVM.csv")

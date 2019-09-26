@@ -21,7 +21,7 @@ hyperparameters = dict(C=C, penalty=penalty)
 
 if gridSearch:
     lr = LogisticRegression(solver='lbfgs')
-    grid = GridSearchCV(lr, hyperparameters, cv=5, verbose=3)
+    grid = GridSearchCV(lr, hyperparameters, cv=5, verbose=3, n_jobs=-1)
 
     # Run grid search
     grid.fit(X, y)
@@ -30,7 +30,7 @@ if gridSearch:
     discrete_predictions = grid.predict(z)
 
     # Print best parameters
-    print("Best parameters: " + str(grid.get_params()))
+    print("Best parameters: " + str(grid.best_params_))
 
     # Save output
     save_predictions(discrete_predictions, name="grid_discrete_LR.csv")
