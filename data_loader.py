@@ -174,4 +174,4 @@ def save_predictions(predictions, name="submission.csv", fmt="%i"):
     data = np.zeros((ids.shape[0], 2))
     data[:, 0] = ids
     data[:, 1] = predictions
-    np.savetxt(name, data, fmt=['%i', fmt], delimiter=",", header="PassengerId,Survived")
+    np.savetxt(name, data, fmt=['%i', fmt], delimiter=",", header="PassengerId,Survived", comments='')

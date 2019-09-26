@@ -8,7 +8,7 @@ X, y = load_train_data()
 z = load_test_data()
 
 # defining parameter range for grid search
-gridSearch = False
+gridSearch = True
 
 param_grid = {'C': [0.1, 1, 10, 100, 1000, 10000],
               'gamma': [1, 0.1, 0.01, 0.001, 0.0001],
@@ -23,6 +23,8 @@ if gridSearch:
     # Make predictions
     discrete_predictions = grid.predict(z)
     prob_predictions = grid.predict_proba(z)[:, 1]
+
+    print("Best parameters: " + str(grid.get_params()))
 
     # Save outputs
     save_predictions(discrete_predictions, name="grid_discrete_SVM.csv")
