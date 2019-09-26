@@ -2,12 +2,12 @@ from sklearn.linear_model import LogisticRegression
 from data_loader import *
 from sklearn.model_selection import GridSearchCV
 
-# get data
+# Get data
 X, y = load_train_data()
 
 z = load_test_data()
 
-# defining parameter range for grid search
+# Defining parameter range for grid search
 gridSearch = True
 
 # Create regularization penalty space
@@ -32,16 +32,16 @@ if gridSearch:
     # Print best parameters
     print("Best parameters: " + str(grid.get_params()))
 
-    # Save outputs
+    # Save output
     save_predictions(discrete_predictions, name="grid_discrete_LR.csv")
 
 else:
-    # discrete predictions
+    # Create model
     model = LogisticRegression(solver='lbfgs')
 
     model.fit(X, y)
 
     discrete_predictions = model.predict(z)
 
-    # save submissions
+    # Save output
     save_predictions(discrete_predictions, name="discrete_LR.csv")

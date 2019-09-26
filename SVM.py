@@ -7,7 +7,7 @@ X, y = load_train_data()
 
 z = load_test_data()
 
-# defining parameter range for grid search
+# Defining parameter range for grid search
 gridSearch = True
 
 param_grid = {'C': [0.1, 1, 10, 100, 1000, 10000],
@@ -26,18 +26,16 @@ if gridSearch:
 
     print("Best parameters: " + str(grid.get_params()))
 
-    # Save outputs
+    # Save output
     save_predictions(discrete_predictions, name="grid_discrete_SVM.csv")
-    save_predictions(prob_predictions, name="grid_probability_SVM.csv", fmt="%.4f")
 else:
     # discrete predictions
-    model = SVC(C=1000, gamma='auto', kernel='linear', probability=True)
+    model = SVC(C=1000, gamma='auto', kernel='linear')
 
     model.fit(X, y)
 
     discrete_predictions = model.predict(z)
     prob_predictions = model.predict_proba(z)[:, 1]
 
-    # save submissions
+    # save output
     save_predictions(discrete_predictions, name="discrete_SVM.csv")
-    save_predictions(prob_predictions, name="probability_SVM.csv", fmt="%.4f")
