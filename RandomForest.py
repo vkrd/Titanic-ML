@@ -8,7 +8,7 @@ X, y = load_train_data()
 z = load_test_data()
 
 # Defining parameter range for grid search
-gridSearch = False
+gridSearch = True
 
 # Random gridsearch code below from:
 # https://towardsdatascience.com/hyperparameter-tuning-the-random-forest-in-python-using-scikit-learn-28d2aa77dd74
@@ -51,12 +51,10 @@ if gridSearch:
     save_predictions(discrete_predictions, name="grid_discrete_RF.csv")
 else:
     # discrete predictions
-    model = RandomForestClassifier(n_estimators=600, min_samples_split=10, min_samples_leaf=2, max_features='auto',
-                                   max_depth=40, bootstrap=False)
-
+    model = RandomForestClassifier(n_estimators=1600, min_samples_split=5, min_samples_leaf=1, max_features='sqrt',
+                                   max_depth=80, bootstrap=True)
 
     model.fit(X, y)
-    print(model.feature_importances_)
 
     discrete_predictions = model.predict(z)
 
