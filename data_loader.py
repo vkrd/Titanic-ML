@@ -2,15 +2,18 @@ import numpy as np
 import pandas as pd
 import re
 from sklearn.impute import SimpleImputer
+from sklearn import preprocessing
 
-def load_train_data():
+mm_scaler = preprocessing.MinMaxScaler()
+
+def load_train_data(normalize=False):
     train = pd.read_csv("custom_impute_train.csv", low_memory=False)
 
     train = train.to_numpy()
 
     y = train[:, 1]
 
-    X = np.zeros((train.shape[0], 9))
+    X = np.zeros((train.shape[0], 8))
 
     # pClass
     X[:, 0] = train[:, 2]
@@ -66,20 +69,24 @@ def load_train_data():
             else:
                 X[i, 7] = int(re.findall(r'\d+', train[i, 10])[0])
 
-    # Child
-    X[:8] = train[:10]
+
 
     imp = SimpleImputer(missing_values=np.nan, strategy='mean')
     imp.fit(X)
+    X = imp.transform(X)
 
-    return imp.transform(X), y.astype('int')
+    if normalize:
+        X = mm_scaler.transform(X)
+        mm_scaler.fit(X, y=y)
 
-def load_test_data():
+    return X, y.astype('int')
+
+def load_test_data(normalize=False):
     train = pd.read_csv("custom_impute_test.csv", low_memory=False)
 
     train = train.to_numpy()
 
-    X = np.zeros((train.shape[0], 9))
+    X = np.zeros((train.shape[0], 8))
 
     # pClass
     X[:, 0] = train[:, 1]
@@ -134,13 +141,12 @@ def load_test_data():
             else:
                 X[i, 7] = int(re.findall(r'\d+', train[i, 9])[0])
 
-    # Child
-    X[:8] = train[:10]
-
     imp = SimpleImputer(missing_values=np.nan, strategy='mean')
     imp.fit(X)
-
-    return imp.transform(X)
+    X = imp.transform(X)
+    if normalize:
+        X = mm_scaler.transform(X)
+    return X
 
 
 def save_predictions(predictions, name="submission.csv", fmt="%i"):

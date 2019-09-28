@@ -12,7 +12,6 @@ gridSearch = True
 
 # Random gridsearch code below from:
 # https://towardsdatascience.com/hyperparameter-tuning-the-random-forest-in-python-using-scikit-learn-28d2aa77dd74
-
 # Number of trees in random forest
 n_estimators = [int(x) for x in np.linspace(start = 200, stop = 2000, num = 10)]
 # Number of features to consider at every split
@@ -48,7 +47,7 @@ if gridSearch:
     print("Best parameters: " + str(grid.best_params_))
 
     # Save output
-    save_predictions(discrete_predictions, name="grid_discrete_RF.csv")
+    save_predictions(discrete_predictions, name="grid_RF.csv")
 else:
     # discrete predictions
     model = RandomForestClassifier(n_estimators=1600, min_samples_split=5, min_samples_leaf=1, max_features='sqrt',
@@ -59,4 +58,4 @@ else:
     discrete_predictions = model.predict(z)
 
     # save output
-    save_predictions(discrete_predictions, name="discrete_RF.csv")
+    save_predictions(discrete_predictions, name="RF.csv")
