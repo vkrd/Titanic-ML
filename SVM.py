@@ -8,9 +8,9 @@ X, y = load_train_data()
 z = load_test_data()
 
 # Defining parameter range for grid search
-gridSearch = True
+gridSearch = False
 
-param_grid = {'C': [0.1, 1, 10, 100, 1000, 10000],
+param_grid = {'C': [1, 10, 100, 1000],
               'gamma': [1, 0.1, 0.01, 0.001, 0.0001],
               'kernel': ['linear', 'rbf']}
 
@@ -30,7 +30,7 @@ if gridSearch:
     save_predictions(discrete_predictions, name="grid_discrete_SVM.csv")
 else:
     # discrete predictions
-    model = SVC(C=1000, gamma='auto', kernel='linear')
+    model = SVC(C=1000, gamma=1, kernel='linear')
 
     model.fit(X, y)
 

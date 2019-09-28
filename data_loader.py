@@ -1,7 +1,8 @@
 import numpy as np
 import pandas as pd
 import re
-from sklearn.preprocessing import Imputer
+from sklearn.impute import SimpleImputer
+from sklearn.preprocessing import normalize
 
 def load_train_data():
     train = pd.read_csv("train.csv", low_memory=False)
@@ -81,7 +82,7 @@ def load_train_data():
             X[i, 9] = 0
             X[i, 10] = 1
 
-    imp = Imputer(missing_values=np.nan, strategy='mean', axis=0)
+    imp = SimpleImputer(missing_values=np.nan, strategy='mean')
     imp.fit(X)
 
     return imp.transform(X), y.astype('int')
@@ -161,7 +162,7 @@ def load_test_data():
             X[i, 9] = 0
             X[i, 10] = 1
 
-    imp = Imputer(missing_values=np.nan, strategy='mean', axis=0)
+    imp = SimpleImputer(missing_values=np.nan, strategy='mean')
     imp.fit(X)
 
     return imp.transform(X)
